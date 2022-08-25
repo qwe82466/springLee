@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://mybatis.org/schema/mybatis-spring
+	http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+	> 
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- Root Context: service(비지니스 로직 처리), DB관련 설정 -->
+	
+	<!-- 파일다운로드 -->
+	<bean id="fileDown" class="com.upload.util.DownloadView"/>
+	
+	
+	
+	
+	<!-- 파일업로드  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="-1"></property>		<!-- 파일의 최대크기  ,-1은 최대크기 -->
+		<property name="defaultEncoding" value="UTF-8"></property>	<!-- 파일이름 인코딩 -->
+		
+	</bean>
+	
+	
+	<!--  커넥션 풀 세팅 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.100.250:1521:ORCL" />
+		<property name="username" value="java10" />
+		<property name="password" value="java10"></property>
+	</bean>
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+	
+		<!--  MyBatis 연동 설정 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource" />    
+   </bean>
+   
+    <!-- myBatis가 mapper를 스캔하도록 -->
+	<mybatis-spring:scan base-package="com.board.persistence"/>
+	
+	   <!-- 서비스 패키지 스캔하여, @Component, @Service 등 어노테이션 붙은 클래스 스프링빈으로 등록하도록 설정 -->
+   <context:component-scan base-package="com.board.service"></context:component-scan>
+		
+</beans>
