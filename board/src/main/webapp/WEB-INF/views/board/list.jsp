@@ -52,7 +52,7 @@
 					<form id="searchForm" action="/board/list" method="get">
 						<select name="sel">
 							<option value="">----</option>
-							<option value="T">제목</option>
+							<option value="T">제목</option>			
 							<option value="C">내용</option>
 							<option value="W">작성자</option>
 							<option value="TC">제목 OR 내용</option>
@@ -60,11 +60,11 @@
 							<option value="CW">내용 OR 작성자</option>
 							<option value="TWC">제목 OR 작성자 OR 내용</option>
 						</select> 
-						<input type="text" name="keyword" /> 
-						<input type="hidden"name="pageNum" value="${pager.cri.pageNum}" /> 
-						<input type="hidden" name="listQty" value="${pager.cri.listQty}" />
+							<input type="text" name="keyword" /> 
+							<input type="hidden"name="pageNum" value="${pager.cri.pageNum}" />
+							<input type="hidden" name="listQty" value="${pager.cri.listQty}" />
 						<button class="btn btn-secondary">검색</button>
-
+		<!-- 보드리스트로  -->
 					</form>
 				</div>
 			</div>
@@ -80,18 +80,15 @@
 
 					<ul class="pagination">
 						<c:if test="${pager.prev}">
-							<li class="page-item "><a class="page-link"
-								href="${pager.startPage-1}" tabindex="-1">Previous</a></li>
+							<li class="page-item "><a class="page-link" href="${pager.startPage-1}" tabindex="-1">Previous</a></li>
 						</c:if>
-						<c:forEach var="num" begin="${pager.startPage}"
-							end="${pager.endPage}">
+						<c:forEach var="num" begin="${pager.startPage}" end="${pager.endPage}">
 							<li class="page-item ${pager.cri.pageNum == num ? "active":""}">
 								<a class="page-link" href="${num}">${num}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pager.next}">
-							<li class="page-item"><a class="page-link"
-								href="${pager.endPage+1}">Next</a></li>
+							<li class="page-item"><a class="page-link" href="${pager.endPage+1}">Next</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -100,8 +97,8 @@
 			<form id="pagingForm" action="/board/list">
 				<input type="hidden" name="pageNum" value="${pager.cri.pageNum}" />
 				<input type="hidden" name="listQty" value="${pager.cri.listQty}" />
-				<input type="hidden" name="sel" value="${pager.cri.sel}" />
-				<input type="hidden" name="keyword" value="${pager.cri.keyword}" />
+				<input type="hidden" name="sel" value="${pager.cri.sel}" /> <input
+					type="hidden" name="keyword" value="${pager.cri.keyword}" />
 			</form>
 
 
@@ -176,7 +173,7 @@
 									e.preventDefault(); // a 태그의 기본 이동 기능 취소 
 									console.log("a click!!click!!!");
 
-									pagingForm.attr("action","/baord/list")
+									pagingForm.attr("action", "/baord/list")
 									// form 태그의 pageNum value 속성값을
 									// 이벤트 발생시킨 a태그의 href 속성값으로 변경
 									pagingForm.find("input[name='pageNum']")
@@ -209,20 +206,16 @@
 
 						//검색 폼 처리
 						let searchForm = $("#searchForm"); // 1.문서전체를 가져와주세요
-						$("#searchForm button").on(
-								"click",
-								function(e) { //2.서치폼 내부에 버튼을 클릭하는 순간
-									if (!searchForm.find("option:selected").val()) {//3.셀렉트 안에 밸류를 가져왔는데 없다면.
+						$("#searchForm button").on("click", function(e) { //2.서치폼 내부에 버튼을 클릭하는 순간
+									if (!searchForm.find("option:selected") .val()) {//3.셀렉트 안에 밸류를 가져왔는데 없다면.
 										alert("검색 종류를 선택하세요..."); //4. 알람띄우기
 										return false; //5. submit이동 막기
 									}
-									if (!searchForm.find(
-											"input[name='keyword']").val()) {//3. 키워드가 없다면
+									if (!searchForm.find( "input[name='keyword']").val()) {//3. 키워드가 없다면
 										alert("키워드를 입력해주세요.."); //4. 알람띄우기
 										return false; //5. submit이동 막기
 									}
-									searchForm.find("input[name='pageNum']")
-											.val("1"); //1. 1페이지로 바꾸기
+									searchForm.find("input[name='pageNum']") .val("1"); //1. 1페이지로 바꾸기
 									searchForm.submit();
 
 								});

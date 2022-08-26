@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 	http://mybatis.org/schema/mybatis-spring
 	http://mybatis.org/schema/mybatis-spring-1.2.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-4.3.xsd"
-	> 
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd"> 
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
@@ -49,5 +51,39 @@
 	
 	   <!-- 서비스 패키지 스캔하여, @Component, @Service 등 어노테이션 붙은 클래스 스프링빈으로 등록하도록 설정 -->
    <context:component-scan base-package="com.board.service"></context:component-scan>
-		
+   	<!-- 해당 패키지 안의 @component 어노테이션 붙은 친구들 스트링빈으로 등록 -->
+   <context:component-scan base-package="com.board.aop"></context:component-scan>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- aop 설정 -->
+	<!-- 
+	<bean id="advice" class="com.board.aop.Advice"/>
+			<aop:before method="beforeL" pointcut-ref="pc1"/>
+			<aop:after method="afterL" pointcut-ref="pc1"/>
+			<aop:after-returning method="afterReturning" pointcut-ref="pc1"/>
+			<aop:after-throwing method="afterT" pointcut-ref="pc1"/>
+	  -->
+	 <!-- 
+	<aop:config>
+		<aop:pointcut expression="execution(* com.board.service.TestService*.*(..))" id="pc1"/>
+		<aop:pointcut expression="execution(* com.board.service.TestService*.*(..))" id="pc2"/>
+			<aop:aspect ref="advice">
+				<aop:around method="around" pointcut-ref="pc1"/>
+		</aop:aspect>
+	</aop:config>
+	 -->	
 </beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

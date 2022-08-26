@@ -214,7 +214,14 @@
 		</dependency>
 					
 
-
+		<!-- 에스펙트제이 위버 https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<!-- AOP : https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+	      <dependency>
+	          <groupId>org.aspectj</groupId>
+	          <artifactId>aspectjweaver</artifactId>
+	          <version>${org.aspectj-version}</version>
+	      </dependency>
+		
 
 
 
