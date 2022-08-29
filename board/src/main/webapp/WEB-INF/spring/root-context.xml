@@ -1,89 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" 
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-	http://mybatis.org/schema/mybatis-spring
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://mybatis.org/schema/mybatis-spring 
 	http://mybatis.org/schema/mybatis-spring-1.2.xsd
-	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context 
 	http://www.springframework.org/schema/context/spring-context-4.3.xsd
 	http://www.springframework.org/schema/aop
-	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd"> 
+	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Root Context: Service(비지니스로직처리), DB관련 설정 -->
 	
-	<!-- Root Context: service(비지니스 로직 처리), DB관련 설정 -->
+	<!--  파일 다운로드   -->
+	<bean id="fileDown" class="com.upload.util.DownloadView" />
 	
-	<!-- 파일다운로드 -->
-	<bean id="fileDown" class="com.upload.util.DownloadView"/>
-	
-	
-	
-	
-	<!-- 파일업로드  -->
+	<!-- 파일 업로드  -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="-1"></property>		<!-- 파일의 최대크기  ,-1은 최대크기 -->
-		<property name="defaultEncoding" value="UTF-8"></property>	<!-- 파일이름 인코딩 -->
-		
+		<property name="maxUploadSize" value="-1"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
 	
 	
-	<!--  커넥션 풀 세팅 -->
+	<!-- 커넥션 풀 세팅  -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.100.250:1521:ORCL" />
 		<property name="username" value="java10" />
-		<property name="password" value="java10"></property>
+		<property name="password" value="java10" />
 	</bean>
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
-		<constructor-arg ref="hikariConfig"/>
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
 	</bean>
 	
-		<!--  MyBatis 연동 설정 -->
+	<!--  MyBatis 연동 설정  -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-      <property name="dataSource" ref="dataSource" />    
-   </bean>
-   
-    <!-- myBatis가 mapper를 스캔하도록 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- Mapper 스캔하도록 설정 -->
 	<mybatis-spring:scan base-package="com.board.persistence"/>
+	<mybatis-spring:scan base-package="com.member.persistence"/>
 	
-	   <!-- 서비스 패키지 스캔하여, @Component, @Service 등 어노테이션 붙은 클래스 스프링빈으로 등록하도록 설정 -->
-   <context:component-scan base-package="com.board.service"></context:component-scan>
-   	<!-- 해당 패키지 안의 @component 어노테이션 붙은 친구들 스트링빈으로 등록 -->
-   <context:component-scan base-package="com.board.aop"></context:component-scan>
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- @Service 붙은 클래스들 빈으로 등록하도록 스캔  -->
+	<context:component-scan base-package="com.board.service" />
+	<context:component-scan base-package="com.member.service" />
 	
-	<!-- aop 설정 -->
+	<!--  aop 어노테이션 설정  -->
+	<!-- 해당 패키지 안의 @Component 어노테이션 붙은 클래스 스프링빈으로 등록 -->
+	<context:component-scan base-package="com.board.aop" />
+	<aop:aspectj-autoproxy />
+	
+	
+	<!--  aop xml 설정 
+	<bean id="advice" class="com.board.aop.Advice" />  -->
 	<!-- 
-	<bean id="advice" class="com.board.aop.Advice"/>
-			<aop:before method="beforeL" pointcut-ref="pc1"/>
-			<aop:after method="afterL" pointcut-ref="pc1"/>
+			<aop:before method="before" pointcut-ref="pc1" />
+			<aop:after method="afterAop" pointcut-ref="pc1"/>
 			<aop:after-returning method="afterReturning" pointcut-ref="pc1"/>
-			<aop:after-throwing method="afterT" pointcut-ref="pc1"/>
-	  -->
-	 <!-- 
+			<aop:after-throwing method="afterThrowing" pointcut-ref="pc1"/>
+	
 	<aop:config>
-		<aop:pointcut expression="execution(* com.board.service.TestService*.*(..))" id="pc1"/>
-		<aop:pointcut expression="execution(* com.board.service.TestService*.*(..))" id="pc2"/>
-			<aop:aspect ref="advice">
-				<aop:around method="around" pointcut-ref="pc1"/>
+		<aop:pointcut id="pc1" expression="execution(* com.board.service.TestService*.*(..))" />
+		<aop:pointcut id="pc2" expression="execution(* com.board.service.BoardService*.*(..))" />
+		<aop:aspect ref="advice">
+			<aop:around method="around" pointcut-ref="pc1"/>
+			<aop:around method="around" pointcut-ref="pc2"/>
 		</aop:aspect>
-	</aop:config>
-	 -->	
+	</aop:config>  -->
+	
+	
+	
+	
+	
+	
+	
+	
+		
 </beans>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

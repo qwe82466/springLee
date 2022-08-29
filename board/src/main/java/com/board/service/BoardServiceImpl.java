@@ -13,36 +13,34 @@ import com.board.persistence.BoardMapper;
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	private BoardMapper mapper;
+	private BoardMapper mapper; 
 	
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
+		return mapper.getListWithPaging(cri); 
 	}
 
 	@Override
 	public void register(BoardVO board) {
 		mapper.insertSelectKey(board);
-	
 	}
 
 	@Override
 	public BoardVO get(Long bno) {
-		// TODO Auto-generated method stub
+		
 		return mapper.read(bno);
 	}
 
 	@Override
 	public boolean modify(BoardVO board) {
-		//업데이트 결과가 1일때 true 리턴 
-		return	mapper.update(board)==1;
-		 
+		// 업데이트 결과가 1이면 true 리턴 
+		return mapper.update(board) == 1;
 	}
 
 	@Override
 	public boolean delete(Long bno) {
 		
-		return mapper.delete(bno) ==1;
+		return mapper.delete(bno) == 1;
 	}
 
 	@Override
@@ -51,6 +49,6 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getTotalCount(cri);
 	}
 
-
-
+	
+	
 }

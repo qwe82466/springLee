@@ -3,16 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>UploadForm</title>
 </head>
 <body>
-	<h1 align="center"> 업로드 양식</h1>
+
+	<h2> File Upload </h2>
 	<form action="/upload/uploadPro" method="post" enctype="multipart/form-data">
-		message : <input type="text" name="msg"/> <br />
-		file    : <input type="file" name="img"/> <br />
-				  <input type="submit" value="전송"/> <br />
+		message : <input type="text" name="msg" /> <br />
+		file	: <input type="file" name="img" /> <br />
+				  <input type="submit" value="전송" /> <br />
 	</form>
+
+
 
 </body>
 </html>

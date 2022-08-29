@@ -16,26 +16,24 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class TestServiceTests {
 
-   @Autowired
-   private TestService service; 
-   
-   /*
-   @Test
-   public void testClass() {
-      log.info(service);
-      log.info(service.getClass().getName());
-   }
-   */
-   
-   @Test
-   public void testAbc() {
-	   log.info("------------test abc---------");
-	  
-	   service.helloAop();
-   }
-   
-   
-   
-   
+	@Autowired
+	private TestService service; 
+	
+	/*
+	@Test
+	public void testClass() {
+		log.info(service);
+		log.info(service.getClass().getName());
+	}*/
+	
+	@Test
+	public void testAbc() {
+		log.info("======== test abc ========");
+		service.helloAop(10, 20);
+	}
+	
+	
+	
+	
 
 }
