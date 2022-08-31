@@ -3,6 +3,7 @@ package com.member.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +30,14 @@ public class CommonController {
 	
 	// 로그인 폼 요청 (처리는 시큐리티가) 
 	@GetMapping("login")
-	public void login() {
+	public void login(String error, HttpServletRequest request) {
 		log.info("************** login!!!! *************");
+		log.info("error : " + error);
+		
+		// 접근제한때문에 로그인폼으로 강제 이동되었다면 직전 url 뽑아서 session 임시저장 
+		String referrer = request.getHeader("Referer");
+		request.getSession().setAttribute("prevPage", referrer);
+		
 	}
 	
 	// 회원가입 폼 
@@ -55,7 +62,11 @@ public class CommonController {
 		return "redirect:/common/main";
 	}
 	
-	
+	// 접근 제한시 보여줄 페이지 경로 매핑 
+	@GetMapping("accessError")
+	public void accessError(Authentication auth) {
+		log.info("*********** 접근 제한 : " + auth);
+	}
 	
 	
 	

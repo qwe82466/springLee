@@ -102,6 +102,26 @@
 		    <version>2.13.3</version>
 		</dependency>
 		
+		<!-- XML사용하기 위해 https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <version>2.13.3</version>
+		</dependency>
+		
+		<!-- JAVA -> JSON 변환을 위해  https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.9</version>
+		</dependency>
+		
+		
+		
+		
+		
+		
+		
 		<!-- 파일 업로드  -->
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>

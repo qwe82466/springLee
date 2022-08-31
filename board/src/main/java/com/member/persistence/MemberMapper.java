@@ -21,5 +21,7 @@ public interface MemberMapper {
 	// 권한 삭제 
 	public int deleteAuth(String id);
 	
+	// 아이디 비번 확인 
+	public int idPwCheck(MemberVO member);
 	
 }

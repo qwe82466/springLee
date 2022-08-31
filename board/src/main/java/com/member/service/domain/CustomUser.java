@@ -9,8 +9,13 @@ import org.springframework.security.core.userdetails.User;
 
 import com.member.domain.MemberVO;
 
-public class CustomUser extends User {
+import lombok.Getter;
 
+@Getter
+public class CustomUser extends User { // principal 
+
+	private static final long serialVersionUID = 1L;
+	
 	// 회원 정보 담을 인스턴스 변수 추가 
 	private MemberVO member; 
 	

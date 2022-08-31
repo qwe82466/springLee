@@ -1,6 +1,7 @@
 package com.board.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +38,20 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping({"read", "modify"})
+	@GetMapping("read")
 	public void read(Long bno, Model model, @ModelAttribute("cri") Criteria cri) {
 		log.info("read!!!!!!!");
 		model.addAttribute("board", service.get(bno));
 	}
 	
+	@PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능하게 
+	@GetMapping("modify")
+	public void modifyForm(Long bno, Model model, @ModelAttribute("cri") Criteria cri) {
+		log.info("modifyForm!!!!!!!");
+		model.addAttribute("board", service.get(bno));
+	}
+	
+	@PreAuthorize("principal.useranme == #board.writer") // 작성자와 로그인한 사람이 같은지 확인 
 	@PostMapping("modify")
 	public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr) {
 		// 수정처리 
@@ -53,8 +62,9 @@ public class BoardController {
 		return "redirect:/board/list" + cri.getListLink();
 	}
 	
+	@PreAuthorize("principal.useranme == #writer") // 작성자와 로그인한 사람이 같은지 확인 
 	@PostMapping("delete")
-	public String delete(Long bno, Criteria cri, RedirectAttributes rttr) {
+	public String delete(Long bno, String writer, Criteria cri, RedirectAttributes rttr) {
 		// 삭제 처리 
 		if(service.delete(bno)) {
 			log.info("*********** 삭제 성공!!!!!!! ************");
@@ -65,9 +75,11 @@ public class BoardController {
 	
 	// 글 등록 폼 
 	@GetMapping("write")
+	@PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능하게 
 	public void write() {
 	}
 	// 글 등록 처리 
+	@PreAuthorize("isAuthenticated()") // 로그인한 사용자만 접근 가능하게 
 	@PostMapping("write")
 	public String writeBoard(BoardVO board, RedirectAttributes rttr) {
 		log.info("write 처리 : " + board);
