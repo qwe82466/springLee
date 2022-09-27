@@ -49,20 +49,41 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO getMember(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.getMember(id);
 	}
 
 	@Override
 	public int modifyMember(MemberVO member) {
-		// TODO Auto-generated method stub
-		return 0;
+		// id pw 체크 추가 
+		int result = 0; 
+		MemberVO dbMember = getMember(member.getId());
+		if(bcryptPasswordEncoder.matches(member.getPw(), dbMember.getPw())) {
+			result = mapper.updateMember(member);
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteMember(MemberVO member) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0; 
+		MemberVO dbMember = getMember(member.getId());
+		if(bcryptPasswordEncoder.matches(member.getPw(), dbMember.getPw())) {
+			result = 1; 
+			// FK 제약조건 때문에 Auth먼저 삭제하고 member 삭제
+			int deleteRes = mapper.deleteAuth(member.getId());
+			log.info("********** delete member auth res : " + deleteRes);
+			deleteRes = mapper.deleteMember(member.getId());
+			log.info("********** delete member res : " + deleteRes);
+		}
+		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

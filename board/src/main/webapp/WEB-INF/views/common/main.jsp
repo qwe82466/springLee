@@ -32,12 +32,45 @@
 			<td><button onclick="window.location='/board/list'">게시판</button></td>
 		</tr>
 		<tr>
-			<td><button onclick="window.location='/member/logout'">로그아웃</button></td>
+			<td><%-- 시큐리티로 로그아웃 : /logout POST요청, csrf 토큰 필수 --%>
+				<form action="/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<button>로그아웃</button>
+				</form>
+			</td>
 		</tr>
 		<tr>
 			<td><button onclick="window.location='/member/mypage'">마이페이지</button></td>
 		</tr>
 	</table>
+	<br />
+	<h3> 사용자 정보 출력 </h3>
+	<table>
+		<tr>
+			<td>pricipal</td>
+			<td><sec:authentication property="principal" /></td>
+		</tr>
+		<tr>
+			<td>MemberVO</td>
+			<td><sec:authentication property="principal.member" /></td>
+		</tr>
+		<tr>
+			<td>사용자 이름</td>
+			<td><sec:authentication property="principal.member.name" /></td>
+		</tr>
+		<tr>
+			<td>사용자 아이디 </td>
+			<td><sec:authentication property="principal.username" /></td>
+		</tr>
+		<tr>
+			<td>권한 리스트</td>
+			<td><sec:authentication property="principal.member.authList" /></td>
+		</tr>
+		
+	</table>
+	
+	
+	
 	</sec:authorize>
 	
 	<br /><br />

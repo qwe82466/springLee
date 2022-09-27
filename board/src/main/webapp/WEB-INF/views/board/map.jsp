@@ -48,6 +48,25 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
     resultDiv.innerHTML = message;
     
 });
+$.ajax({
+	url : "test.action",
+	type : 'post',
+	data : {
+		name : "이름",
+		age : "20",
+		gender : "man"
+	},
+	success : function(data) {
+				
+     },
+	error : function() {
+		alert("error");
+	}
+});
+
+
 </script>
+
+
 </body>
 </html>
