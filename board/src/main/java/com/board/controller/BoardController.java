@@ -86,6 +86,10 @@ public class BoardController {
 		return "redirect:/board/list"; 
 	}
 	
+	@GetMapping("map")
+	public void map() {
+		
+	}
 	
 	
 	

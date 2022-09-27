@@ -65,12 +65,12 @@
 	</form>
 	
 	<script>
-	/*
+	
 	$(document).ready(function(){
 		$("#id").change(function(){  // id 입력란에 값을 입력했을때, 
 			// id 입력란에 사용자가 입력한 값이 필요 
 			let idVal = $("#id").val();
-			//console.log(idVal); 출력해서 확인하기!! 
+			console.log(idVal); 
 			
 			// 꺼낸 입력값을 서버에 보내서 DB에 동일한 id가 있는지 체크
 			$.ajax({
@@ -88,7 +88,7 @@
 				}
 			}); 
 		}); 
-	});*/
+	});
 	</script>
 </body>
 </html>
