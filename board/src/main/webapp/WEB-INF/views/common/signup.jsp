@@ -67,6 +67,7 @@
 	<script>
 	
 	$(document).ready(function(){
+<<<<<<< HEAD
 	      $("#id").change(function(){  // id 입력란에 값을 입력했을때, 
 	         // id 입력란에 사용자가 입력한 값이 필요 
 	         let idVal = $("#id").val();
@@ -96,6 +97,30 @@
 	         }); 
 	      }); 
 	   });
+=======
+		$("#id").change(function(){  // id 입력란에 값을 입력했을때, 
+			// id 입력란에 사용자가 입력한 값이 필요 
+			let idVal = $("#id").val();
+			console.log(idVal); 
+			
+			// 꺼낸 입력값을 서버에 보내서 DB에 동일한 id가 있는지 체크
+			$.ajax({
+				type: "post", 
+				url: "/member/idAvail",
+				data: {id : idVal}, 
+				success: function(result){
+					console.log("success"); 
+					console.log(result);
+					// 결과를 아이디사용가능여부 input 태그의 value값으로 띄워 주기
+					$("#checkResult").val(result);
+				}, 
+				error: function(e){ 
+					console.log(e); 
+				}
+			}); 
+		}); 
+	});
+>>>>>>> branch 'master' of https://github.com/qwe82466/springLee.git
 	</script>
 </body>
 </html>

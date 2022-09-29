@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.ResponseBody;
+=======
+>>>>>>> branch 'master' of https://github.com/qwe82466/springLee.git
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.BoardVO;
@@ -109,6 +112,7 @@ public class BoardController {
 	public void map() {
 		
 	}
+<<<<<<< HEAD
 	
 	@GetMapping("mapfocus")
 	public void mapfocus() {
@@ -160,7 +164,20 @@ public class BoardController {
 	}
 	
 	
+
 	
+	@GetMapping("map2")
+	public void map2() {
+		
+	}
+	
+	@PostMapping
+	public String map2pro(@RequestParam("name")String name ) {
+		
+		System.out.print(name);
+		
+	 	return "";
+	}
 	
 	
 	
