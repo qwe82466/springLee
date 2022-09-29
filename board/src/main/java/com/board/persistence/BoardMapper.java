@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
+import com.board.domain.LocationVO;
 
 public interface BoardMapper {
 
@@ -28,6 +29,10 @@ public interface BoardMapper {
 	// 글 개수 조회 
 	public int getTotalCount(Criteria cri);
 	
+	// 위도 경도 저장
+	public void location(LocationVO location);
 	
+	// 메인 지도 위치 레코드 전부 불러오기
+	public List<LocationVO> locationList();
 	
 }

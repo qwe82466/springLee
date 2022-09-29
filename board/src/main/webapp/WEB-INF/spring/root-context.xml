@@ -48,9 +48,11 @@
 	<!-- @Service 붙은 클래스들 빈으로 등록하도록 스캔  -->
 	<context:component-scan base-package="com.board.service" />
 	<context:component-scan base-package="com.member.service" />
+	 
 	
 	<!--  aop 어노테이션 설정  -->
 	<!-- 해당 패키지 안의 @Component 어노테이션 붙은 클래스 스프링빈으로 등록 -->
+	
 	<context:component-scan base-package="com.board.aop" />
 	<aop:aspectj-autoproxy />
 	

@@ -1,5 +1,9 @@
 package com.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.domain.MemberVO;
 import com.member.service.MemberService;
@@ -53,7 +58,7 @@ public class MemberController {
 	@GetMapping("delete")
 	public void delete() {
 	}
-	
+		
 	// 회원 삭제 처리 
 	@PostMapping("delete")
 	public String deletePro(MemberVO member, Authentication auth, Model model) {
@@ -64,7 +69,20 @@ public class MemberController {
 	}
 	
 	
-	
+	@PostMapping("idAvail")
+    @ResponseBody
+	  public int checkResult(String user_id, HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	      int result = 0;
+	      log.info("김계정이 멍청하대");
+	      
+	      if(service.getMember(user_id) != null) {
+	         result = 0;
+	      }else {
+	         result = 1;
+	      }
+	      
+	      return result;
+	   }
 	
 	
 	

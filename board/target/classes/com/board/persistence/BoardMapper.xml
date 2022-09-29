@@ -80,8 +80,14 @@
 		where bno = #{bno}
 	</update>
 
+	
+	<insert id="location">
+		insert into location values(#{latitude},#{longitude})
+	</insert>
 
-
+	<select id="locationList" resultType="com.board.domain.LocationVO">
+		select * from location
+	</select>
 
 
 

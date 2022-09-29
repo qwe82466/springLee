@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    
+    <meta name="_csrf" content="${_csrf.token}" />
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
+    
 
     <title>Board</title> 
 
@@ -329,7 +334,11 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                	<sec:authorize access="isAuthenticated()">
+                                		<sec:authentication property="principal.member.name"/>
+                                	</sec:authorize>
+                                </span>
                                 <img class="img-profile rounded-circle"
                                     src="/resources/sbadmin2/img/undraw_profile.svg">
                             </a>
@@ -349,10 +358,24 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                
+                                <sec:authorize access="isAuthenticated()">
+                                	<a id="logoutLink" class="dropdown-item" href="#" >
+                                    	<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    	Logout
+                                	</a>
+                                </sec:authorize>
+                                <sec:authorize access="isAnonymous()">
+                                	<a class="dropdown-item" href="/common/login" >
+                                    	<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    	Login
+                                	</a>
+                                </sec:authorize>
+                                <form id="logoutForm" action="/logout" method="post">
+                                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                </form>
+                                
+                                
                             </div>
                         </li>
 
@@ -367,7 +390,14 @@
                 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 
-                
+        <script type="text/javascript">
+        $(document).ready(function(){
+        	$("#logoutLink").on("click", function(e){
+        		e.preventDefault(); 
+        		$("#logoutForm").submit(); 
+        	});
+        });
+        </script>
                 
                 
     

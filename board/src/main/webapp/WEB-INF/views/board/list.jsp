@@ -16,6 +16,11 @@
                 	<button id="writeBtn" type="button" class="btn btn-primary btn-sm float-right">New Board</button>
                 </h6>
             </div>
+            
+            <div id="map"></div>
+        
+            
+            
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" >
@@ -122,6 +127,10 @@
             
    	<!-- footer 복붙 -->        
 	<%@ include file="../includes/footer.jsp" %>
+	
+	
+	
+  
 	
 	<script type="text/javascript">
 	$(document).ready(function(){

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
+import com.board.domain.LocationVO;
 import com.board.persistence.BoardMapper;
 
 @Service
@@ -47,6 +48,20 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotal(Criteria cri) {
 		
 		return mapper.getTotalCount(cri);
+	}
+
+	@Override
+	public void location(LocationVO location) {
+		
+		mapper.location(location);
+		
+	}
+
+	@Override
+	public List<LocationVO> locationList() {
+		List<LocationVO> locationList = mapper.locationList();
+		return locationList;
+		
 	}
 
 	

@@ -1,5 +1,9 @@
 package com.board.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -8,10 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
+import com.board.domain.LocationVO;
 import com.board.domain.PageDTO;
 import com.board.service.BoardService;
 
@@ -38,7 +45,7 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("read")
+	@GetMapping("read") 
 	public void read(Long bno, Model model, @ModelAttribute("cri") Criteria cri) {
 		log.info("read!!!!!!!");
 		model.addAttribute("board", service.get(bno));
@@ -97,6 +104,61 @@ public class BoardController {
 		
 		return "redirect:/board/list"; 
 	}
+	
+	@GetMapping("map")
+	public void map() {
+		
+	}
+	
+	@GetMapping("mapfocus")
+	public void mapfocus() {
+		 
+	}
+	
+	
+	
+	@GetMapping("mapfocus2")
+	public void mapfocus2() {
+		//마커에 메모저장기능
+		
+		
+	}
+	
+	@GetMapping("mapfocus3")
+	public void mapfocus3() {
+		
+	}
+	
+	
+	@GetMapping("mapfocusPro")
+	public void mapfocusPro(LocationVO location, Model model)   {
+		model.addAttribute("latitude", location.getLatitude());
+		model.addAttribute("longitude", location.getLongitude());
+	    service.location(location);
+		log.info(location.toString());
+
+	}
+	
+	@GetMapping("mapfocus4")
+	public void mapfocus4(Model model) {
+		
+		log.info(service.locationList());
+		model.addAttribute("list", service.locationList()); 
+		
+		
+		 // List<LocationVO> list = service.locationList();
+		 //return list;
+	}
+	
+	@RequestMapping("mapfocus5")
+	@ResponseBody
+	public List<LocationVO> mapfocus5(){
+		List<LocationVO> list = service.locationList();
+		//난에이작스로줌...
+		
+		return list;
+	}
+	
 	
 	
 	

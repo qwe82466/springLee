@@ -27,7 +27,7 @@
 			</tr>
 			<tr>
 				<td>아이디 사용가능 여부</td>
-				<td><input type="text" id="checkResult" disabled /></td>
+				<td><input type="text" id="checkResult" disabled /></div></td>
 			</tr>
 			<tr>
 				<td>비밀번호 *</td>
@@ -65,30 +65,37 @@
 	</form>
 	
 	<script>
-	/*
+	
 	$(document).ready(function(){
-		$("#id").change(function(){  // id 입력란에 값을 입력했을때, 
-			// id 입력란에 사용자가 입력한 값이 필요 
-			let idVal = $("#id").val();
-			//console.log(idVal); 출력해서 확인하기!! 
-			
-			// 꺼낸 입력값을 서버에 보내서 DB에 동일한 id가 있는지 체크
-			$.ajax({
-				type: "post", 
-				url: "/member/idAvail",
-				data: {id : idVal}, 
-				success: function(result){
-					console.log("success"); 
-					console.log(result);
-					// 결과를 아이디사용가능여부 input 태그의 value값으로 띄워 주기
-					$("#checkResult").val(result);
-				}, 
-				error: function(e){ 
-					console.log(e); 
-				}
-			}); 
-		}); 
-	});*/
+	      $("#id").change(function(){  // id 입력란에 값을 입력했을때, 
+	         // id 입력란에 사용자가 입력한 값이 필요 
+	         let idVal = $("#id").val();
+	         console.log(idVal); 
+	         
+	         // 꺼낸 입력값을 서버에 보내서 DB에 동일한 id가 있는지 체크
+	         $.ajax({
+	            type: "post", 
+	            url: "/member/idAvail",
+	            data: {id : idVal},
+	            dataType : 'json',
+	            success: function(result){
+	               if(result == 0){
+	                  $("#checkResult").html('이미 사용중인 아이디 입니다.');
+	                  $("#checkResult").attr('color', 'red');
+	               }else{
+	                  console.log("success"); 
+	                  console.log(result);
+	                  // 결과를 아이디사용가능여부 input 태그의 value값으로 띄워 주기
+	                  $("#checkResult").html('사용할 수 있는 아이디 입니다.');
+	                  $("#checkResult").attr('color', 'blue');
+	               }
+	            }, 
+	            error: function(e){ 
+	               console.log(e); 
+	            }
+	         }); 
+	      }); 
+	   });
 	</script>
 </body>
 </html>
